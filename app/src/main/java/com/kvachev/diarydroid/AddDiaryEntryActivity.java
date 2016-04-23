@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -54,18 +55,19 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
 
     public void addDiaryEntryOnClick(View view) {
         try {
-//            FileOutputStream fos = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
-//            ObjectOutputStream os = new ObjectOutputStream(fos);
-//            DiaryEntry diaryEntry = formDiaryEntry();
-//            os.writeObject(diaryEntry);
-//            os.close();
-//            fos.close();
-            throw new Exception();
+            FileOutputStream fos = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            DiaryEntry diaryEntry = formDiaryEntry();
+            os.writeObject(diaryEntry);
+            os.close();
+            fos.close();
         }
         catch (Exception e)
         {
             AlertDialog.Builder dialog  = new AlertDialog.Builder(this);
-            dialog.setMessage(R.string.add_entry_error_message);
+            dialog.setMessage(R.string.add_entry_error_message + "\n"
+                    + e.toString() + ": "
+                    + e.getLocalizedMessage());
             dialog.setTitle(R.string.add_entry_error_title);
             dialog.setPositiveButton(R.string.add_entry_error_ok, null);
             dialog.setCancelable(true);
