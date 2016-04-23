@@ -1,12 +1,15 @@
 package com.kvachev.diarydroid;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +17,9 @@ import java.util.Map;
 
 public class MainActivity extends Activity {
 
-    String[] groups = new String[] {"HTC", "Samsung", "LG"};
+    private final static String filename = "diary_data";
+
+    String[] groups = new String[] {"Day 1", "Day 2", "Этот список пока еще не готов же"};
     String[] phonesHTC = new String[] {"Sensation", "Desire", "Wildfire", "Hero"};
     String[] phonesSams = new String[] {"Galaxy S II", "Galaxy Nexus", "Wave"};
     String[] phonesLG = new String[] {"Optimus", "Optimus Link", "Optimus Black", "Optimus One"};
@@ -47,6 +52,29 @@ public class MainActivity extends Activity {
         // список ID view-элементов, в которые будет помещены аттрибуты групп
         int groupTo[] = new int[] {android.R.id.text1};
 
+        DiaryEntry entry = new DiaryEntry();
+        entry.message = "lol no";
+
+        try {
+
+            FileInputStream fis = getApplicationContext().openFileInput(filename);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            entry = (DiaryEntry) is.readObject();
+            is.close();
+            fis.close();
+        }
+        catch (Exception e)
+        {
+            AlertDialog.Builder dialog  = new AlertDialog.Builder(this);
+            dialog.setMessage(R.string.add_entry_error_message + "\n"
+                    + e.toString() + "\n"
+                    + e.getLocalizedMessage());
+            dialog.setTitle(R.string.add_entry_error_message);
+            dialog.setPositiveButton(R.string.add_entry_error_ok, null);
+            dialog.setCancelable(true);
+            dialog.create().show();
+        }
+
 
         // создаем коллекцию для коллекций элементов
         childData = new ArrayList<ArrayList<Map<String, String>>>();
@@ -56,7 +84,7 @@ public class MainActivity extends Activity {
         // заполняем список аттрибутов для каждого элемента
         for (String phone : phonesHTC) {
             m = new HashMap<String, String>();
-            m.put("phoneName", phone); // название телефона
+            m.put("phoneName", entry.message); // название телефона
             childDataItem.add(m);
         }
         // добавляем в коллекцию коллекций

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DiaryDroid</string>
+    <string name="add_button_label">Добавить запись в дневник</string>
+    <string name="add_entry_error_message">Ошибка сохранения записи</string>
+    <string name="add_entry_error_title">Ошибка!</string>
+    <string name="add_entry_error_ok">Ну ладно</string>
+</resources>

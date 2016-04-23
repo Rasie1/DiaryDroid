@@ -61,9 +61,9 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
         {
             AlertDialog.Builder dialog  = new AlertDialog.Builder(this);
             dialog.setMessage(R.string.add_entry_error_message + "\n"
-                    + e.toString() + ": "
+                    + e.toString() + "\n"
                     + e.getLocalizedMessage());
-            dialog.setTitle(R.string.add_entry_error_title);
+            dialog.setTitle(R.string.add_entry_error_message);
             dialog.setPositiveButton(R.string.add_entry_error_ok, null);
             dialog.setCancelable(true);
             dialog.create().show();
