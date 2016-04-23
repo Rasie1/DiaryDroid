@@ -23,7 +23,7 @@
         android:background="@null"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/add_with_square"
+        android:src="@drawable/circular_add_button"
         android:layout_alignParentEnd="true" />
 
     <ExpandableListView
