@@ -16,11 +16,24 @@
         android:layout_height="wrap_content" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:scaleType="fitXY"
         android:id="@+id/imageButton"
+        android:background="@null"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:src="@drawable/add_with_square"
         android:layout_alignParentEnd="true" />
+
+    <ExpandableListView
+        android:id="@+id/elvMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        android:background="@null" />
 
 </RelativeLayout>
