@@ -21,13 +21,14 @@
         android:scaleType="fitXY"
         android:id="@+id/imageButton"
         android:background="@null"
+        android:onClick="openAddDiaryEntryActivity"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:src="@drawable/circular_add_button"
         android:layout_alignParentEnd="true" />
 
     <ExpandableListView
-        android:id="@+id/elvMain"
+        android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

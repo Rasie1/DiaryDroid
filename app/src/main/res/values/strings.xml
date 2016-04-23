@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DiaryDroid</string>
+    <string name="add_button_label">Add Diary Entry</string>
+    <string name="add_entry_error_message">Error while saving the entry</string>
+    <string name="add_entry_error_title">Error!</string>
+    <string name="add_entry_error_ok">Okay...</string>
 </resources>

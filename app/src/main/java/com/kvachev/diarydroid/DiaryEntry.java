@@ -1,3 +1,5 @@
+package com.kvachev.diarydroid;
+
 import java.util.Date;
 
 /**

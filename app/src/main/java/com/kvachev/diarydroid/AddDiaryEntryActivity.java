@@ -1,65 +1,76 @@
 package com.kvachev.diarydroid;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddDiaryEntryActivity extends AppCompatActivity {
 
-    private final static String DIARYDATA="diary_data";
-//    private EditText txtEditor;
+    private final static String filename = "diary_data";
+    private EditText   textEditor;
+    private DatePicker datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_diary_entry);
 
-//        txtEditor=(EditText)findViewById(R.id.textbox);
+        textEditor = (EditText)findViewById(R.id.editText);
+        datePicker = (DatePicker)findViewById(R.id.datePicker);
+
     }
 
-//    public void saveClicked(View v) {
-//        try {
-//            OutputStreamWriter out = new OutputStreamWriter(openFileOutput(STORETEXT, 0));
-//            out.write(txtEditor.getText().toString());
-//            out.close();
-//            Toast
-//                    .makeText(this, "The contents are saved in the file.", Toast.LENGTH_LONG)
-//                    .show();
-//
-//        }
-//        catch (Throwable t) {
-//            Toast
-//                    .makeText(this, "Exception: "+t.toString(), Toast.LENGTH_LONG)
-//                    .show();
-//        }
-//    }
+    private Date getDateFromDatePicker() {
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year =  datePicker.getYear();
 
-//    public void saveBgColorPreference()
-//    {
-//        RadioGroup g = (RadioGroup) findViewById(R.id.prefgroup);
-//        int selected = g.getCheckedRadioButtonId();
-//        RadioButton b = (RadioButton) findViewById(selected);
-//        String selectedValue = (String) b.getText();
-//        SharedPreferences myPrefs = this.getSharedPreferences("myPrefs", MODE_WORLD_READABLE);
-//        SharedPreferences.Editor prefsEditor = myPrefs.edit();
-//
-//        prefsEditor.putString("bgcolor", selectedValue);
-//        prefsEditor.commit();
-//    }
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
 
-//    public void setColorOnPreference()
-//    {
-//        mScreen = (LinearLayout) findViewById(R.id.myScreen);
-//        SharedPreferences myPrefs2 = this.getSharedPreferences("myPrefs", MODE_WORLD_READABLE);
-//
-//        String prefName = myPrefs2.getString("bgcolor", "Blue");
-//
-//        if (prefName.equals("Blue"))
-//            mScreen.setBackgroundColor(0xff0000ff);
-//        else
-//            mScreen.setBackgroundColor(0xffff0000);
-//    }
+        return calendar.getTime();
+    }
+    private DiaryEntry formDiaryEntry()
+    {
+        DiaryEntry ret = new DiaryEntry();
+        ret.date    = getDateFromDatePicker();
+        ret.message = textEditor.getText().toString();
+
+        return ret;
+    }
+
+    public void addDiaryEntryOnClick(View view) {
+        try {
+//            FileOutputStream fos = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
+//            ObjectOutputStream os = new ObjectOutputStream(fos);
+//            DiaryEntry diaryEntry = formDiaryEntry();
+//            os.writeObject(diaryEntry);
+//            os.close();
+//            fos.close();
+            throw new Exception();
+        }
+        catch (Exception e)
+        {
+            AlertDialog.Builder dialog  = new AlertDialog.Builder(this);
+            dialog.setMessage(R.string.add_entry_error_message);
+            dialog.setTitle(R.string.add_entry_error_title);
+            dialog.setPositiveButton(R.string.add_entry_error_ok, null);
+            dialog.setCancelable(true);
+            dialog.create().show();
+        }
+    }
+
 }
