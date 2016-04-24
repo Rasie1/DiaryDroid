@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -61,10 +62,21 @@ public class MainActivity extends Activity {
         }
         HashMap<String, ArrayList<String>> groups = new HashMap<String, ArrayList<String>>();
         for (DiaryEntry x : entries) {
-            String key = x.date.getDisplayName(
-                    Calendar.DAY_OF_WEEK,
-                    Calendar.LONG,
-                    Locale.getDefault());
+            SimpleDateFormat format = new SimpleDateFormat("MMM yyyy: dd");
+            String key = format.format(x.date.getTime());
+//            String key = x.date.getDisplayName(
+//                    Calendar.MONTH,
+//                    Calendar.LONG,
+//                    Locale.getDefault()) + " " + x.date.getDisplayName(
+//                    Calendar.YEAR,
+//                    Calendar.LONG,
+//                    Locale.getDefault()) + " - " + x.date.getDisplayName(
+//                    Calendar.DAY_OF_MONTH,
+//                    Calendar.LONG,
+//                    Locale.getDefault()) + " (" + x.date.getDisplayName(
+//                    Calendar.DAY_OF_WEEK,
+//                    Calendar.LONG,
+//                    Locale.getDefault()) + ")";
             if (!groups.containsKey(key)) {
                 ArrayList<String> list = new ArrayList<String>();
                 list.add(x.message);
@@ -120,7 +132,7 @@ public class MainActivity extends Activity {
 
         expandableListView.setAdapter(adapter);
 
-        if (entries.isEmpty())
+        if (!entries.isEmpty())
             noEntriesText.setVisibility(View.GONE);
         else
             noEntriesText.setVisibility(View.VISIBLE);
