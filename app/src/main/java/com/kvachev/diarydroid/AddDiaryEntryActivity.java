@@ -1,23 +1,17 @@
 package com.kvachev.diarydroid;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-import org.json.JSONArray;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class AddDiaryEntryActivity extends AppCompatActivity {
 
