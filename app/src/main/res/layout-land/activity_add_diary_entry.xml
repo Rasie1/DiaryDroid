@@ -39,7 +39,7 @@
                 android:layout_weight="0.98"
                 android:autoText="true"
                 android:gravity="top"
-                android:hint="Enter your message" />
+                android:hint="@string/enter_your_message" />
 
             <Button
                 android:layout_width="wrap_content"

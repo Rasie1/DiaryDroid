@@ -4,9 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
+import org.json.JSONArray;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
@@ -26,7 +29,6 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
 
         textEditor = (EditText)findViewById(R.id.editText);
         datePicker = (DatePicker)findViewById(R.id.datePicker);
-
     }
 
     private Calendar getDateFromDatePicker() {
@@ -42,20 +44,35 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
     private DiaryEntry formDiaryEntry()
     {
         DiaryEntry ret = new DiaryEntry();
-        ret.date    = getDateFromDatePicker();
-        ret.message = textEditor.getText().toString();
+//        ret.date    = getDateFromDatePicker();
+        ret.message = textEditor.getText().toString().replaceAll("{", "(").replaceAll("}", ")").replaceAll("|", "-");
 
         return ret;
     }
 
     public void addDiaryEntryOnClick(View view) {
         try {
-            FileOutputStream fos = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
-            ObjectOutputStream os = new ObjectOutputStream(fos);
-            DiaryEntry diaryEntry = formDiaryEntry();
-            os.writeObject(diaryEntry);
-            os.close();
-            fos.close();
+//            Log.i("lol", textEditor.getText().toString());
+            if (textEditor.getText().toString() == "" || // almost works
+                    textEditor.getText().toString() == getString(R.string.message_cant_be_empty))
+            {
+                throw new UnsupportedOperationException(getString(R.string.message_cant_be_empty));
+            }
+
+//            FileOutputStream fos = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
+//            ObjectOutputStream os = new ObjectOutputStream(fos);
+//            DiaryEntry diaryEntry = formDiaryEntry();
+//            os.writeObject(diaryEntry);
+//            os.close();
+//            fos.close();
+
+            FileOutputStream fos = this.openFileOutput(filename, MODE_PRIVATE);
+            final OutputStreamWriter osw = new OutputStreamWriter(fos);
+
+            String out = formDiaryEntry().toString();
+            osw.write(out);
+            osw.flush();
+            osw.close();
         }
         catch (Exception e)
         {
