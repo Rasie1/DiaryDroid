@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -21,6 +22,7 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
     private final static String filename = "diary_data";
     private EditText   textEditor;
     private DatePicker datePicker;
+    private CheckBox deleteEntriesCheckbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
 
         textEditor = (EditText)findViewById(R.id.editText);
         datePicker = (DatePicker)findViewById(R.id.datePicker);
+        deleteEntriesCheckbox = (CheckBox)findViewById((R.id.checkbox));
     }
 
     private Calendar getDateFromDatePicker() {
@@ -84,6 +87,8 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
             fos = this.openFileOutput(filename, MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             entries.add(formDiaryEntry());
+            if (deleteEntriesCheckbox.isChecked())
+                entries.clear();
             oos.writeObject(entries);
             oos.flush();
             oos.close();

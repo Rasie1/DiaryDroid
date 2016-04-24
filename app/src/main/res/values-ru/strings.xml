@@ -7,4 +7,5 @@
     <string name="enter_your_message">Введите сообщение</string>
     <string name="message_cant_be_empty">Запись в дневнике не может быть пустой</string>
     <string name="no_entries">Не найдено записей. Почему бы не добавить?</string>
+    <string name="delete_all_entries">Удалить остальные записи</string>
 </resources>
