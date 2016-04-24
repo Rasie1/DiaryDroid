@@ -9,9 +9,4 @@ import java.util.Calendar;
 public class DiaryEntry implements Serializable {
     public Calendar date;
     public String message;
-
-//    public String toString()
-//    {
-//        return "{" +/* date + "|" + */ message + "}";
-//    }
 }

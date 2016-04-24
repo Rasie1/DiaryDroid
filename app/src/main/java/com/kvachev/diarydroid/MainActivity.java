@@ -22,8 +22,11 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 
 public class MainActivity extends Activity {
@@ -49,38 +52,21 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        try {
-//            FileInputStream fos = this.openFileInput(filename, MODE_PRIVATE);
-//            final InputStreamReader osw = new InputStreamReader(fos);
-//
-//            osw.read()
-//        }
-//        catch (Exception e)
-//        {
-//
-//        }
         FileInputStream fos = null;
-        String result = "";
+        ArrayList<DiaryEntry> entries = null;
         DiaryEntry entry = new DiaryEntry();
-        entry.message = "default";
         try {
 
             fos = this.openFileInput(filename);
-            // json is UTF-8 by default
             ObjectInputStream ois = new ObjectInputStream(fos);
-            entry = (DiaryEntry) ois.readObject();
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(fos), 8);
-//            StringBuilder sb = new StringBuilder();
-//
-//            String line = null;
-//            while ((line = reader.readLine()) != null)
-//            {
-//                sb.append(line + "\n");
-//            }
-//            result = sb.toString();
+            entries = (ArrayList<DiaryEntry>) ois.readObject();
+
+            entry = entries.get(0);
         } catch (Exception e) {
             Log.i("error", "couldn't read file");
-            // Oops
+
+            entry.message = "default";
+            entry.date = Calendar.getInstance();
         }
         finally {
             try {
@@ -90,34 +76,10 @@ public class MainActivity extends Activity {
             catch(Exception e){}
         }
 
-        Log.i("result", "reading string");
         Log.i("result", entry.message);
 
-//        Log.i("readJson", "trying to read file");
-//        try {
-//
-//            JSONObject jObject = new JSONObject(result);
-//            JSONArray jArray = jObject.getJSONArray("0");
-////            Log.i(j)
-//
-//            for (int i = 0; i < jArray.length(); i++)
-//            {
-//                try {
-////                    JSONObject oneObject = jArray.getJSONObject(i);
-//                    String oneObject = jArray.getString(i);//getJSONObject(i);
-//                    Log.i("Json", oneObject.toString());
-//                    // Pulling items from the array
-////                    String oneObjectsItem = oneObject.getString("STRINGNAMEinTHEarray");
-////                    String oneObjectsItem2 = oneObject.getString("anotherSTRINGNAMEINtheARRAY");
-//                } catch (JSONException e) {
-//                    Log.i("readJson", e.toString() + ": " + e.getMessage());
-//                }
-//            }
-//        }
-//        catch (Exception e) {
-//            Log.i("parseJson", e.toString() + ": " + e.getMessage());
-//        }
 
+        // todo: replace
 
         groupData = new ArrayList<Map<String, String>>();
         for (String group : groups) {

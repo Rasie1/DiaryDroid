@@ -15,7 +15,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddDiaryEntryActivity extends AppCompatActivity {
 
@@ -54,37 +56,24 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
 
     public void addDiaryEntryOnClick(View view) {
         try {
-//            Log.i("lol", textEditor.getText().toString());
             if (textEditor.getText().toString() == "" || // almost works
                     textEditor.getText().toString() == getString(R.string.message_cant_be_empty))
             {
                 throw new UnsupportedOperationException(getString(R.string.message_cant_be_empty));
             }
 
-//            FileOutputStream fos = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
-//            ObjectOutputStream os = new ObjectOutputStream(fos);
-//            DiaryEntry diaryEntry = formDiaryEntry();
-//            os.writeObject(diaryEntry);
-//            os.close();
-//            fos.close();
+            // read prev file here
+            ArrayList<DiaryEntry> items = new ArrayList<DiaryEntry>();
+
+
+
 
             FileOutputStream fos = this.openFileOutput(filename, MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            oos.writeObject(formDiaryEntry());
+            items.add(formDiaryEntry());
+            oos.writeObject(items);
             oos.flush();
             oos.close();
-
-
-//            final OutputStreamWriter osw = new OutputStreamWriter(fos);
-//
-//            String out = formDiaryEntry().toString();
-//
-//            fos.write(formDiaryEntry());
-//
-//            osw.write(out);
-//            osw.flush();
-//            osw.close();
         }
         catch (Exception e)
         {
