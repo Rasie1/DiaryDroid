@@ -15,6 +15,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends Activity {
@@ -35,7 +36,6 @@ public class MainActivity extends Activity {
 
     private void populateList()
     {
-
         FileInputStream fos = null;
         ArrayList<DiaryEntry> entries = null;
         DiaryEntry entry = new DiaryEntry();
@@ -59,22 +59,26 @@ public class MainActivity extends Activity {
             }
             catch(Exception e){}
         }
-        HashMap<Calendar, ArrayList<String>> groups = new HashMap<Calendar, ArrayList<String>>();
+        HashMap<String, ArrayList<String>> groups = new HashMap<String, ArrayList<String>>();
         for (DiaryEntry x : entries) {
-            if (!groups.containsKey(x.date)) {
+            String key = x.date.getDisplayName(
+                    Calendar.DAY_OF_WEEK,
+                    Calendar.LONG,
+                    Locale.getDefault());
+            if (!groups.containsKey(key)) {
                 ArrayList<String> list = new ArrayList<String>();
                 list.add(x.message);
 
-                groups.put(x.date, list);
+                groups.put(key, list);
             } else {
-                groups.get(x.date).add(x.message);
+                groups.get(key).add(x.message);
             }
         }
 
         ArrayList<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
-        for (Calendar key : groups.keySet()) {
+        for (String key : groups.keySet()) {
             HashMap<String, String> m = new HashMap<String, String>();
-            m.put("groupName", key.getTime().toString());
+            m.put("groupName", key);
             groupData.add(m);
         }
 
@@ -84,7 +88,7 @@ public class MainActivity extends Activity {
         ArrayList<ArrayList<Map<String, String>>> childData = new ArrayList<ArrayList<Map<String, String>>>();
 
         ArrayList<Map<String, String>> childDataItem = new ArrayList<Map<String, String>>();
-        for (Calendar key : groups.keySet()) {
+        for (String key : groups.keySet()) {
             HashMap<String, String> m = new HashMap<String, String>();
             for (String msg : groups.get(key))
             {

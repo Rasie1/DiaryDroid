@@ -3,12 +3,15 @@ package com.kvachev.diarydroid;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,6 +52,8 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
 
 
     public void addDiaryEntryOnClick(View view) {
+
+
         try {
             if (textEditor.getText().toString() == "" || // almost works
                     textEditor.getText().toString() == getString(R.string.message_cant_be_empty))
@@ -56,16 +61,30 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
                 throw new UnsupportedOperationException(getString(R.string.message_cant_be_empty));
             }
 
-            // read prev file here
-            ArrayList<DiaryEntry> items = new ArrayList<DiaryEntry>();
+            FileInputStream fis = null;
+            FileOutputStream fos = null;
+            ArrayList<DiaryEntry> entries = null;
+            try {
 
+                fis = this.openFileInput(filename);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                entries = (ArrayList<DiaryEntry>) ois.readObject();
 
+            } catch (Exception e) {
+                Log.i("error", "couldn't read file");
+            }
+            finally {
+                try {
+                    if (fis != null)
+                        fis.close();
+                }
+                catch(Exception e){}
+            }
 
-
-            FileOutputStream fos = this.openFileOutput(filename, MODE_PRIVATE);
+            fos = this.openFileOutput(filename, MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            items.add(formDiaryEntry());
-            oos.writeObject(items);
+            entries.add(formDiaryEntry());
+            oos.writeObject(entries);
             oos.flush();
             oos.close();
         }
