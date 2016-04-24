@@ -2,7 +2,6 @@ package com.kvachev.diarydroid;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,9 +14,8 @@ import java.io.ObjectInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class MainActivity extends Activity {
 
@@ -60,9 +58,9 @@ public class MainActivity extends Activity {
             }
             catch(Exception e){}
         }
-        HashMap<String, ArrayList<String>> groups = new HashMap<String, ArrayList<String>>();
+        TreeMap<String, ArrayList<String>> groups = new TreeMap<String, ArrayList<String>>();
         for (DiaryEntry x : entries) {
-            SimpleDateFormat format = new SimpleDateFormat("MMM yyyy: dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy MMM dd");
             String key = format.format(x.date.getTime());
 
             if (!groups.containsKey(key)) {
@@ -77,7 +75,7 @@ public class MainActivity extends Activity {
 
         ArrayList<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
         for (String key : groups.keySet()) {
-            HashMap<String, String> m = new HashMap<String, String>();
+            TreeMap<String, String> m = new TreeMap<String, String>();
             m.put("groupName", key);
             groupData.add(m);
         }
@@ -91,7 +89,7 @@ public class MainActivity extends Activity {
             ArrayList<Map<String, String>> childDataItem = new ArrayList<Map<String, String>>();
             for (String msg : groups.get(key))
             {
-                HashMap<String, String> m = new HashMap<String, String>();
+                TreeMap<String, String> m = new TreeMap<String, String>();
                 m.put("itemName", msg);
                 childDataItem.add(m);
             }
