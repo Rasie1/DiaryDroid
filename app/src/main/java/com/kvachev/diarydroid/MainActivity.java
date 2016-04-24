@@ -87,8 +87,8 @@ public class MainActivity extends Activity {
 
         ArrayList<ArrayList<Map<String, String>>> childData = new ArrayList<ArrayList<Map<String, String>>>();
 
-        ArrayList<Map<String, String>> childDataItem = new ArrayList<Map<String, String>>();
         for (String key : groups.keySet()) {
+            ArrayList<Map<String, String>> childDataItem = new ArrayList<Map<String, String>>();
             for (String msg : groups.get(key))
             {
                 HashMap<String, String> m = new HashMap<String, String>();
