@@ -64,19 +64,7 @@ public class MainActivity extends Activity {
         for (DiaryEntry x : entries) {
             SimpleDateFormat format = new SimpleDateFormat("MMM yyyy: dd");
             String key = format.format(x.date.getTime());
-//            String key = x.date.getDisplayName(
-//                    Calendar.MONTH,
-//                    Calendar.LONG,
-//                    Locale.getDefault()) + " " + x.date.getDisplayName(
-//                    Calendar.YEAR,
-//                    Calendar.LONG,
-//                    Locale.getDefault()) + " - " + x.date.getDisplayName(
-//                    Calendar.DAY_OF_MONTH,
-//                    Calendar.LONG,
-//                    Locale.getDefault()) + " (" + x.date.getDisplayName(
-//                    Calendar.DAY_OF_WEEK,
-//                    Calendar.LONG,
-//                    Locale.getDefault()) + ")";
+
             if (!groups.containsKey(key)) {
                 ArrayList<String> list = new ArrayList<String>();
                 list.add(x.message);
@@ -101,14 +89,14 @@ public class MainActivity extends Activity {
 
         ArrayList<Map<String, String>> childDataItem = new ArrayList<Map<String, String>>();
         for (String key : groups.keySet()) {
-            HashMap<String, String> m = new HashMap<String, String>();
             for (String msg : groups.get(key))
             {
+                HashMap<String, String> m = new HashMap<String, String>();
                 m.put("itemName", msg);
+                childDataItem.add(m);
             }
-            childDataItem.add(m);
+            childData.add(childDataItem);
         }
-        childData.add(childDataItem);
 
 
 
