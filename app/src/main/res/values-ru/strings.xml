@@ -6,4 +6,5 @@
     <string name="add_entry_error_ok">Ну ладно</string>
     <string name="enter_your_message">Введите сообщение</string>
     <string name="message_cant_be_empty">Запись в дневнике не может быть пустой</string>
+    <string name="no_entries">Не найдено записей. Почему бы не добавить?</string>
 </resources>

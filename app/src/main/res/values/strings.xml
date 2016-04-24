@@ -6,4 +6,5 @@
     <string name="add_entry_error_ok">Okay...</string>
     <string name="enter_your_message">Enter your message</string>
     <string name="message_cant_be_empty">Diary entry cannot be empty</string>
+    <string name="no_entries">No entries found. Add some!</string>
 </resources>

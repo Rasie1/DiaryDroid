@@ -2,11 +2,13 @@ package com.kvachev.diarydroid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
+import android.widget.TextView;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -21,6 +23,8 @@ public class MainActivity extends Activity {
 
 
     ExpandableListView expandableListView;
+
+    TextView noEntriesText;
 
 
     @Override
@@ -55,10 +59,6 @@ public class MainActivity extends Activity {
             }
             catch(Exception e){}
         }
-
-//        Log.i("result", entry.message);
-
-
         HashMap<Calendar, ArrayList<String>> groups = new HashMap<Calendar, ArrayList<String>>();
         for (DiaryEntry x : entries) {
             if (!groups.containsKey(x.date)) {
@@ -86,7 +86,10 @@ public class MainActivity extends Activity {
         ArrayList<Map<String, String>> childDataItem = new ArrayList<Map<String, String>>();
         for (Calendar key : groups.keySet()) {
             HashMap<String, String> m = new HashMap<String, String>();
-            m.put("itemName", entry.message);
+            for (String msg : groups.get(key))
+            {
+                m.put("itemName", msg);
+            }
             childDataItem.add(m);
         }
         childData.add(childDataItem);
@@ -108,7 +111,16 @@ public class MainActivity extends Activity {
                 childTo);
 
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        noEntriesText = (TextView) findViewById(R.id.textView);
+
+
         expandableListView.setAdapter(adapter);
+
+        if (entries.isEmpty())
+            noEntriesText.setVisibility(View.GONE);
+        else
+            noEntriesText.setVisibility(View.VISIBLE);
+
     }
 
     public void onCreate(Bundle savedInstanceState) {
