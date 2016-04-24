@@ -36,20 +36,16 @@ public class MainActivity extends Activity {
     private void populateList()
     {
         FileInputStream fos = null;
-        ArrayList<DiaryEntry> entries = null;
-        DiaryEntry entry = new DiaryEntry();
+        ArrayList<DiaryEntry> entries = new ArrayList<DiaryEntry>();
         try {
 
             fos = this.openFileInput(filename);
             ObjectInputStream ois = new ObjectInputStream(fos);
             entries = (ArrayList<DiaryEntry>) ois.readObject();
 
-            entry = entries.get(0);
         } catch (Exception e) {
             Log.i("error", "couldn't read file");
-
-            entry.message = "default";
-            entry.date = Calendar.getInstance();
+            Log.i("error", e.toString());
         }
         finally {
             try {

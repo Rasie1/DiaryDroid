@@ -31,7 +31,7 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
 
         textEditor = (EditText)findViewById(R.id.editText);
         datePicker = (DatePicker)findViewById(R.id.datePicker);
-        deleteEntriesCheckbox = (CheckBox)findViewById((R.id.checkbox));
+        deleteEntriesCheckbox = (CheckBox)findViewById((R.id.checkBox));
     }
 
     private Calendar getDateFromDatePicker() {
@@ -48,7 +48,7 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
     {
         DiaryEntry ret = new DiaryEntry();
         ret.date    = getDateFromDatePicker();
-        ret.message = textEditor.getText().toString();//.replaceAll("{", "(").replaceAll("}", ")").replaceAll("|", "-");
+        ret.message = textEditor.getText().toString();
 
         return ret;
     }
@@ -66,7 +66,7 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
 
             FileInputStream fis = null;
             FileOutputStream fos = null;
-            ArrayList<DiaryEntry> entries = null;
+            ArrayList<DiaryEntry> entries = new ArrayList<DiaryEntry>();
             try {
 
                 fis = this.openFileInput(filename);
