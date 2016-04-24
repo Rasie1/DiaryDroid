@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import org.json.JSONArray;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
@@ -44,11 +45,12 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
     private DiaryEntry formDiaryEntry()
     {
         DiaryEntry ret = new DiaryEntry();
-//        ret.date    = getDateFromDatePicker();
-        ret.message = textEditor.getText().toString().replaceAll("{", "(").replaceAll("}", ")").replaceAll("|", "-");
+        ret.date    = getDateFromDatePicker();
+        ret.message = textEditor.getText().toString();//.replaceAll("{", "(").replaceAll("}", ")").replaceAll("|", "-");
 
         return ret;
     }
+
 
     public void addDiaryEntryOnClick(View view) {
         try {
@@ -67,12 +69,22 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
 //            fos.close();
 
             FileOutputStream fos = this.openFileOutput(filename, MODE_PRIVATE);
-            final OutputStreamWriter osw = new OutputStreamWriter(fos);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            String out = formDiaryEntry().toString();
-            osw.write(out);
-            osw.flush();
-            osw.close();
+            oos.writeObject(formDiaryEntry());
+            oos.flush();
+            oos.close();
+
+
+//            final OutputStreamWriter osw = new OutputStreamWriter(fos);
+//
+//            String out = formDiaryEntry().toString();
+//
+//            fos.write(formDiaryEntry());
+//
+//            osw.write(out);
+//            osw.flush();
+//            osw.close();
         }
         catch (Exception e)
         {

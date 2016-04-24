@@ -61,20 +61,25 @@ public class MainActivity extends Activity {
 //        }
         FileInputStream fos = null;
         String result = "";
+        DiaryEntry entry = new DiaryEntry();
+        entry.message = "default";
         try {
 
             fos = this.openFileInput(filename);
             // json is UTF-8 by default
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fos), 8);
-            StringBuilder sb = new StringBuilder();
-
-            String line = null;
-            while ((line = reader.readLine()) != null)
-            {
-                sb.append(line + "\n");
-            }
-            result = sb.toString();
+            ObjectInputStream ois = new ObjectInputStream(fos);
+            entry = (DiaryEntry) ois.readObject();
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(fos), 8);
+//            StringBuilder sb = new StringBuilder();
+//
+//            String line = null;
+//            while ((line = reader.readLine()) != null)
+//            {
+//                sb.append(line + "\n");
+//            }
+//            result = sb.toString();
         } catch (Exception e) {
+            Log.i("error", "couldn't read file");
             // Oops
         }
         finally {
@@ -86,7 +91,8 @@ public class MainActivity extends Activity {
         }
 
         Log.i("result", "reading string");
-        Log.i("result", result);
+        Log.i("result", entry.message);
+
 //        Log.i("readJson", "trying to read file");
 //        try {
 //
@@ -122,9 +128,6 @@ public class MainActivity extends Activity {
 
         String groupFrom[] = new String[] {"groupName"};
         int groupTo[] = new int[] {android.R.id.text1};
-
-        DiaryEntry entry = new DiaryEntry();
-        entry.message = "lol";
 
         childData = new ArrayList<ArrayList<Map<String, String>>>();
 
