@@ -8,4 +8,7 @@
     <string name="message_cant_be_empty">Diary entry cannot be empty</string>
     <string name="no_entries">No entries found. Add some!</string>
     <string name="delete_all_entries">Delete other entries</string>
+    <string name="email_label">Send email to:</string>
+    <string name="enter_email">Enter email</string>
+    <string name="no_email_clients">There are no email clients installed.</string>
 </resources>

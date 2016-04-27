@@ -1,6 +1,7 @@
 package com.kvachev.diarydroid;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import java.io.FileInputStream;
@@ -21,6 +23,7 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
 
     private final static String filename = "diary_data";
     private EditText   textEditor;
+    private EditText   emailEditor;
     private DatePicker datePicker;
     private CheckBox deleteEntriesCheckbox;
 
@@ -30,6 +33,7 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_diary_entry);
 
         textEditor = (EditText)findViewById(R.id.editText);
+        emailEditor = (EditText)findViewById(R.id.editTextEmail);
         datePicker = (DatePicker)findViewById(R.id.datePicker);
         deleteEntriesCheckbox = (CheckBox)findViewById((R.id.checkBox));
     }
@@ -53,13 +57,29 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
         return ret;
     }
 
+    public void sendEmail()
+    {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{emailEditor.getText().toString()});
+        i.putExtra(Intent.EXTRA_SUBJECT, "DiaryDroid");
+        i.putExtra(Intent.EXTRA_TEXT   , textEditor.getText().toString());
+        try {
+            startActivity(Intent.createChooser(i, "Email..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "@string/no_email_clients", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean isEmpty(EditText etText) {
+        return etText.getText().toString().trim().length() == 0;
+    }
 
     public void addDiaryEntryOnClick(View view) {
 
 
         try {
-            if (textEditor.getText().toString() == "" || // almost works
-                    textEditor.getText().toString() == getString(R.string.message_cant_be_empty))
+            if (isEmpty(textEditor))
             {
                 throw new UnsupportedOperationException(getString(R.string.message_cant_be_empty));
             }
@@ -92,6 +112,10 @@ public class AddDiaryEntryActivity extends AppCompatActivity {
             oos.writeObject(entries);
             oos.flush();
             oos.close();
+
+            if (!isEmpty(emailEditor)) {
+                sendEmail();
+            }
         }
         catch (Exception e)
         {

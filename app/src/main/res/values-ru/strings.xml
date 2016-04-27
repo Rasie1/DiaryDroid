@@ -8,4 +8,7 @@
     <string name="message_cant_be_empty">Запись в дневнике не может быть пустой</string>
     <string name="no_entries">Не найдено записей. Почему бы не добавить?</string>
     <string name="delete_all_entries">Удалить остальные записи</string>
+    <string name="email_label">Отправить email на:</string>
+    <string name="enter_email">Введите email</string>
+    <string name="no_email_clients">Не установлено почтовых клиентов.</string>
 </resources>
